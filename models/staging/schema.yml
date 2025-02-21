@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: staging
+    database: dlt-ny-taxi-data-zoomcamp
+    schema: load_ny_taxi_data_dataset
+
+    tables:
+      - name: green_trip_data
+      - name: yellow_trip_data
