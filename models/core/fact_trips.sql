@@ -33,7 +33,7 @@ select trips_unioned.tripid,
     trips_unioned.dropoff_locationid,
     dropoff_zone.borough as dropoff_borough, 
     dropoff_zone.zone as dropoff_zone,  
-    trips_unioned.pickup_datetime, 
+    trips_unioned.pickup_datetime,
     trips_unioned.dropoff_datetime, 
     trips_unioned.store_and_fwd_flag, 
     trips_unioned.passenger_count, 
@@ -47,7 +47,7 @@ select trips_unioned.tripid,
     trips_unioned.ehail_fee, 
     trips_unioned.improvement_surcharge, 
     trips_unioned.total_amount, 
-    trips_unioned.payment_type, 
+    coalesce({{ dbt.safe_cast("payment_type", api.Column.translate_type("integer")) }},0) as payment_type, 
     trips_unioned.payment_type_description
 from trips_unioned
 inner join dim_zones as pickup_zone

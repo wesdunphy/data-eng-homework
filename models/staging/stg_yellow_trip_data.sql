@@ -3,7 +3,7 @@
 with tripdata as 
 (
   select *,
-    row_number() over(partition by vendorid, tpep_pickup_datetime) as rn
+    row_number() over(partition by CAST(vendorid AS STRING), tpep_pickup_datetime) as rn
   from {{ source('staging','yellow_trip_data') }}
   where vendorid is not null 
 )
@@ -21,7 +21,7 @@ select
     
     -- trip info
     store_and_fwd_flag,
-    {{ dbt.safe_cast("passenger_count", api.Column.translate_type("integer")) }} as passenger_count,
+    {{ dbt.safe_cast("passenger_count", api.Column.translate_type("integer"))}} as passenger_count,
     cast(trip_distance as numeric) as trip_distance,
     -- yellow cabs are always street-hail
     1 as trip_type,
